@@ -31,6 +31,7 @@ body {
     height: 100%;
     width: 100%;
     background: var(--color1);
+    user-select: none;
 }
 
 
@@ -103,6 +104,11 @@ body {
     margin: 0 5px;
     width: 270px;
     font-weight: bolder;
+}
+
+.container-fluid .watch .delete-button{
+    border: none;
+    background: transparent;
 }
 
 .container-fluid .watch .lap-container {

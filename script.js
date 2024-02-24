@@ -18,6 +18,16 @@ document.addEventListener('DOMContentLoaded', function () {
     resetButton.addEventListener('click', resetTimer);
     lapButton.addEventListener('click', recordLap);
 
+    // Event delegation for lapContainer
+    lapContainer.addEventListener('click', function (event) {
+        const target = event.target;
+
+        // Check if the clicked element is a delete button
+        if (target.classList.contains('delete-button')) {
+            deleteLap(target.parentNode);
+        }
+    });
+
     function startTimer() {
         if (!startTime) {
             startTime = new Date().getTime();
@@ -76,6 +86,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function recordLap() {
         const lapTime = `${hourElement.textContent}:${minuteElement.textContent}:${secondElement.textContent}`;
+        const lapDiv = createLapDiv(lapTime);
+        lapContainer.appendChild(lapDiv);
+
+        lapCount++;
+    }
+
+    function createLapDiv(lapTime) {
         const lapDiv = document.createElement('div');
         lapDiv.classList.add('lap');
 
@@ -83,15 +100,20 @@ document.addEventListener('DOMContentLoaded', function () {
         timeDiv.classList.add('time');
         timeDiv.textContent = lapTime;
 
-        const deleteButtonDiv = document.createElement('div');
-        deleteButtonDiv.classList.add('delete-button');
-        deleteButtonDiv.innerHTML = '<i class="fas fa-trash text-dark"></i>';
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.innerHTML = '<i class="fas fa-trash text-dark"></i>';
+        deleteButton.addEventListener('click', function () {
+            deleteLap(lapDiv);
+        });
 
         lapDiv.appendChild(timeDiv);
-        lapDiv.appendChild(deleteButtonDiv);
+        lapDiv.appendChild(deleteButton);
 
-        lapContainer.appendChild(lapDiv);
+        return lapDiv;
+    }
 
-        lapCount++;
+    function deleteLap(lapDiv) {
+        lapContainer.removeChild(lapDiv);
     }
 });
