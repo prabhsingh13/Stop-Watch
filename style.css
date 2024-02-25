@@ -127,3 +127,9 @@ body {
     display: flex;
     justify-content: space-between;
 }
+
+@media (max-width: 476px) {
+    .container-fluid .back-text{
+        display: none;
+    }
+}
